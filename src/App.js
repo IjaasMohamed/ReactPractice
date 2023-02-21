@@ -1,7 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const App = () => {
   const [users, setUsers] = useState([]);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   const fetchUserDate = () => {
     fetch(`http://localhost:8000/api/users`, {
       method: "GET",
@@ -11,6 +17,21 @@ const App = () => {
       })
       .then((data) => {
         setUsers(data.users);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const fetchPosts = () => {
+    fetch(`https://jsonplaceholder.typicode.com/posts`, {
+      method: "GET",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setPosts(data);
       })
       .catch((err) => {
         console.log(err);
@@ -31,6 +52,8 @@ const App = () => {
       <button onClick={fetchUserDate} className="btn btn-primary">
         Fetch User Data
       </button>
+
+      {posts && posts.map((posts) => <div key={posts.id}>{posts.title}</div>)}
     </div>
   );
 };
