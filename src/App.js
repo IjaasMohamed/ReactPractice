@@ -1,16 +1,16 @@
 import { useState } from "react";
 
 const App = () => {
-  const [user, setUser] = useState("");
+  const [users, setUsers] = useState([]);
   const fetchUserDate = () => {
-    fetch(`http://localhost:8000/api`, {
+    fetch(`http://localhost:8000/api/users`, {
       method: "GET",
     })
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        setUsers(data.users);
       })
       .catch((err) => {
         console.log(err);
@@ -19,6 +19,15 @@ const App = () => {
 
   return (
     <div className="container">
+      {/* <pre>{JSON.stringify(users, null, 4)}</pre> */}
+
+      {users &&
+        users.map((user) => (
+          <div className="alert alert-primary" key={user.age}>
+            {user.name} age is {users.age}{" "}
+          </div>
+        ))}
+
       <button onClick={fetchUserDate} className="btn btn-primary">
         Fetch User Data
       </button>
