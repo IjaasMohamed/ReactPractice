@@ -3,6 +3,7 @@ import axios from "axios";
 // import { Button } from "bootstrap";
 // import { Button } from "./components/Button";
 import Button from "./components/Button";
+import "./App.css";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -73,7 +74,20 @@ const App = () => {
       <Button handleClick={fetchUserData} title="Fetch user data " />
       <Button handleClick={testFunction} title="Testing" />
 
-      {posts && posts.map((posts) => <div key={posts.id}>{posts.title}</div>)}
+      {posts &&
+        posts.map((posts) => (
+          <div
+            style={{
+              backgroundColor: "indigo",
+              color: "#fff",
+              border: "1px solid #999",
+              padding: "20px",
+            }}
+            key={posts.id}
+          >
+            {posts.title}
+          </div>
+        ))}
     </div>
   );
 };
