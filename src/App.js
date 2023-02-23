@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+// import { Button } from "bootstrap";
+// import { Button } from "./components/Button";
+import Button from "./components/Button";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -36,6 +39,10 @@ const App = () => {
       .catch((err) => console.log(err));
   };
 
+  const testFunction = () => {
+    alert("This is just a test");
+  };
+
   // const fetchPosts = () => {
 
   //   fetch(`https://jsonplaceholder.typicode.com/posts`, {
@@ -63,9 +70,8 @@ const App = () => {
           </div>
         ))}
 
-      <button onClick={fetchUserData} className="btn btn-primary">
-        Fetch User Data
-      </button>
+      <Button handleClick={fetchUserData} title="Fetch user data " />
+      <Button handleClick={testFunction} title="Testing" />
 
       {posts && posts.map((posts) => <div key={posts.id}>{posts.title}</div>)}
     </div>
