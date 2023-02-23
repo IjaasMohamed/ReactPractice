@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -8,35 +9,48 @@ const App = () => {
     fetchPosts();
   }, []);
 
-  const fetchUserDate = () => {
-    fetch(`http://localhost:8000/api/users`, {
-      method: "GET",
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setUsers(data.users);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const fetchUserData = () => {
+    axios
+      .get(`http://localhost:8000/api/users`)
+      .then(({ data }) => setUsers(data.users))
+      .catch((err) => console.log(err));
+
+    // fetch(`http://localhost:8000/api/users`, {
+    //   method: "GET",
+    // })
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     setUsers(data.users);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   const fetchPosts = () => {
-    fetch(`https://jsonplaceholder.typicode.com/posts`, {
-      method: "GET",
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setPosts(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    axios
+      .get(`https://jsonplaceholder.typicode.com/posts`)
+      .then(({ data }) => setPosts(data))
+      .catch((err) => console.log(err));
   };
+
+  // const fetchPosts = () => {
+
+  //   fetch(`https://jsonplaceholder.typicode.com/posts`, {
+  //     method: "GET",
+  //   })
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       setPosts(data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   return (
     <div className="container">
@@ -49,7 +63,7 @@ const App = () => {
           </div>
         ))}
 
-      <button onClick={fetchUserDate} className="btn btn-primary">
+      <button onClick={fetchUserData} className="btn btn-primary">
         Fetch User Data
       </button>
 
