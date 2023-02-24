@@ -5,6 +5,7 @@ import axios from "axios";
 import Button from "./components/Button";
 import "./App.css";
 import styled from "styled-components";
+import { List } from "antd";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -75,7 +76,13 @@ const App = () => {
       <Button handleClick={fetchUserData} title="Fetch user data " />
       <Button handleClick={testFunction} title="Testing" />
 
-      {posts &&
+      <list
+        bordered
+        dataSource={posts}
+        renderItem={(item) => <List.Item>{item.title}</List.Item>}
+      />
+
+      {/* {posts &&
         posts.map((posts) => (
           <PostList
             // style={{
@@ -88,7 +95,7 @@ const App = () => {
           >
             {posts.title}
           </PostList>
-        ))}
+        ))} */}
     </div>
   );
 };
