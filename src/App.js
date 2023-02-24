@@ -6,10 +6,12 @@ import Button from "./components/Button";
 import "./App.css";
 import styled from "styled-components";
 import { List } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const App = () => {
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchPosts();
@@ -38,7 +40,10 @@ const App = () => {
   const fetchPosts = () => {
     axios
       .get(`https://jsonplaceholder.typicode.com/posts`)
-      .then(({ data }) => setPosts(data))
+      .then(({ data }) => {
+        setPosts(data);
+        setLoading(false);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -62,6 +67,15 @@ const App = () => {
   //     });
   // };
 
+  if (loading) {
+    return (
+      <LoadingOutlined
+        className="display-1 text-danger d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      />
+    );
+  }
+
   return (
     <div className="container">
       {/* <pre>{JSON.stringify(users, null, 4)}</pre> */}
@@ -76,12 +90,11 @@ const App = () => {
       <Button handleClick={fetchUserData} title="Fetch user data " />
       <Button handleClick={testFunction} title="Testing" />
 
-      <list
+      <List
         bordered
         dataSource={posts}
         renderItem={(item) => <List.Item>{item.title}</List.Item>}
       />
-
       {/* {posts &&
         posts.map((posts) => (
           <PostList
